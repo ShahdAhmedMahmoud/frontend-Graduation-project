@@ -1,6 +1,6 @@
 
 import React from "react";
-import Timetable from "../../_component/Timetable/Timetable";
+import ProfessorTimetable from "../../../_component/Timetable/ProfessorTimetable";
 
 export default function SchedulePage() {
   return (
@@ -10,7 +10,7 @@ export default function SchedulePage() {
         <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">Your weekly class timetable.</p>
       </div>
 
-      <Timetable />
+      <ProfessorTimetable />
     </div>
   );
 }

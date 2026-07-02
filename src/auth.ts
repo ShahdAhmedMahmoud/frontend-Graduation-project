@@ -314,30 +314,54 @@ export const authOptions: NextAuthOptions = {
   //   },
   // },
 
-  callbacks: {
-  async jwt({ token, user }) {
+//   callbacks: {
+//   async jwt({ token, user }) {
+//     if (user) {
+//       token.user = user.student || user.professor || user.admin ;
+//       token.token = user.token;
+//     }
+//     return token;
+//   },
+
+//   // async session({ session, token }) {
+//   //   session.user = token.user ?? null;
+//   //   session.token = token.token;
+//   //   return session;
+//   // }
+
+//   async session({ session, token }) {
+//   session.user = token.user;
+//   session.token = token.token;
+//   return session;
+// }
+
+
+
+// }
+callbacks: {
+  async jwt({ token, user, trigger, session }) {
     if (user) {
-      token.user = user.student || user.professor || user.admin ;
+      token.user = user.student || user.professor || user.admin;
       token.token = user.token;
     }
+
+    // ✅ لما نستخدم update() من الفرونت، بيدخل هنا
+    if (trigger === "update" && session?.avatar !== undefined) {
+      token.user = {
+        ...(token.user as any),
+        avatar: session.avatar,
+      };
+    }
+
     return token;
   },
 
-  // async session({ session, token }) {
-  //   session.user = token.user ?? null;
-  //   session.token = token.token;
-  //   return session;
-  // }
-
   async session({ session, token }) {
-  session.user = token.user;
-  session.token = token.token;
-  return session;
-}
-
-
-
-}
+    session.user = token.user;
+    session.token = token.token;
+    return session;
+  },
+},
 
 };
 
